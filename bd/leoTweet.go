@@ -3,6 +3,7 @@ package bd
 import (
 	"context"
 	"log"
+
 	"time"
 
 	"github.com/lucianoOlivera/twittor-GO-API-REST/models"
@@ -21,7 +22,7 @@ func LeoTweets(ID string, pagina int64) ([]*models.DuevuelvoTweets, bool) {
 	var resultados []*models.DuevuelvoTweets
 
 	condicion := bson.M{
-		"userId": ID,
+		"userid": ID,
 	}
 
 	opciones := options.Find()
@@ -43,4 +44,3 @@ func LeoTweets(ID string, pagina int64) ([]*models.DuevuelvoTweets, bool) {
 	}
 	return resultados, true
 }
-

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -12,9 +13,9 @@ import (
 func GraboTweet(w http.ResponseWriter, r *http.Request) {
 	var mensaje models.Tweet
 	err := json.NewDecoder(r.Body).Decode(&mensaje)
-
+	fmt.Println(IdUsuario)
 	registro := models.GraboTweet{
-		UserId:  IdUsuairo,
+		UserId:  IdUsuario,
 		Mensaje: mensaje.Mensaje,
 		Fecha:   time.Now(),
 	}

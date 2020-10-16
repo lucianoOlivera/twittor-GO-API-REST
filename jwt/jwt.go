@@ -16,7 +16,7 @@ func GenerateJWT(t models.Usuario) (string, error) {
 		"biografia": t.Biografia,
 		"ubicacion": t.Ubicacion,
 		"sitioweb":  t.SitioWeb,
-		"_id":       t.Id.Hex(),
+		"_id":       t.ID.Hex(),
 		"exp":       time.Now().Add(time.Hour * 24).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)

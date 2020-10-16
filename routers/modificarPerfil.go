@@ -21,7 +21,7 @@ func ModificarPerfil(w http.ResponseWriter, r *http.Request) {
 
 	var status bool
 
-	status, err = bd.ModificoRegistro(t, IdUsuairo )
+	status, err = bd.ModificoRegistro(t, IdUsuario)
 	if err != nil {
 		http.Error(w, "Ocurrión un error al intentar modificar el registro. Reintente nuevamente "+err.Error(), 400)
 		return
@@ -33,5 +33,5 @@ func ModificarPerfil(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	
+
 }

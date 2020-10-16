@@ -2,6 +2,7 @@ package routers
 
 import (
 	"errors"
+
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -10,7 +11,7 @@ import (
 )
 
 var Email string
-var IdUsuairo string
+var IdUsuario string
 
 //ProcesoToken valida el token
 func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
@@ -18,10 +19,10 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 	claims := &models.Claim{}
 
 	splitToken := strings.Split(tk, "Bearer")
-
 	if len(splitToken) != 2 {
-		return claims, false, string(""), errors.New(" formato de token invalido")
+		return claims, false, string(""), errors.New("formato de token invalido")
 	}
+
 	tk = strings.TrimSpace(splitToken[1])
 
 	tkn, err := jwt.ParseWithClaims(tk, claims, func(token *jwt.Token) (interface{}, error) {
@@ -31,13 +32,12 @@ func ProcesoToken(tk string) (*models.Claim, bool, string, error) {
 		_, encontrado, _ := bd.Usercheck(claims.Email)
 		if encontrado == true {
 			Email = claims.Email
-			IdUsuairo = claims.ID.Hex()
+			IdUsuario = claims.ID.Hex()
 		}
-		return claims, encontrado, IdUsuairo, nil
+		return claims, encontrado, IdUsuario, nil
 	}
 	if !tkn.Valid {
-		return claims, false, string(""), errors.New("token invalido")
+		return claims, false, string(""), errors.New("token Inválido")
 	}
-	return claims, false, string(""), nil
-
+	return claims, false, string(""), err
 }

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/lucianoOlivera/twittor-GO-API-REST/bd"
@@ -26,7 +27,8 @@ func Registro(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Ya existe un usario con ese email", 400)
 		return
 	}
-	_, status, err := bd.InsertRegistro(t)
+	s, status, err := bd.InsertRegistro(t)
+	fmt.Printf(s)
 	if err != nil {
 		http.Error(w, "Ocurrio un erro al intentar realizar el registro de usuario"+err.Error(), 400)
 		return

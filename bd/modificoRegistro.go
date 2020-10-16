@@ -2,6 +2,7 @@ package bd
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/lucianoOlivera/twittor-GO-API-REST/models"
@@ -16,7 +17,7 @@ func ModificoRegistro(u models.Usuario, ID string) (bool, error) {
 	defer cancel()
 
 	db := MongoCN.Database("twittor")
-	col := db.Collection("usuarios")
+	col := db.Collection("users")
 
 	registro := make(map[string]interface{})
 	if len(u.Nombre) > 0 {
@@ -47,6 +48,7 @@ func ModificoRegistro(u models.Usuario, ID string) (bool, error) {
 	}
 
 	objID, _ := primitive.ObjectIDFromHex(ID)
+	fmt.Println(objID.String())
 	filtro := bson.M{"_id": bson.M{"$eq": objID}}
 
 	_, err := col.UpdateOne(ctx, filtro, updtString)

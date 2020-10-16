@@ -2,28 +2,31 @@ package bd
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/lucianoOlivera/twittor-GO-API-REST/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-//Usercheck c
-func Usercheck(email string) (models.Usuario, bool, string) {
+func ConsultoRelacion(t models.Relacion) (bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	db := MongoCN.Database("twittor")
-	col := db.Collection("users")
+	col := db.Collection("relacion")
 
-	condicion := bson.M{"email": email}
-
-	var resultado models.Usuario
-
-	err := col.FindOne(ctx, condicion).Decode(&resultado)
-	ID := resultado.ID.Hex()
-	if err != nil {
-		return resultado, false, ID
+	condicion := bson.M{
+		"usuarioid":         t.UsuarioID,
+		"usuariorelacionid": t.UsuarioRelacionID,
 	}
-	return resultado, true, ID
+	var resultado models.Relacion
+
+	fmt.Println(resultado)
+	err := col.FindOne(ctx, condicion).Decode(&resultado)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false, err
+	}
+	return true, nil
 }
